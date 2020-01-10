@@ -4,23 +4,21 @@ class Basket extends React.Component {
   render() {
     return (
       <div className="alert alert-dismissible alert-success">
-        {this.props.basketList.length === 0 ? (
-          "The Cart is empty"
+        {this.props.cartItems.length === 0 ? (
+          "the Cart is empty"
         ) : (
-          <div>
-            You have {this.props.basketList.length} items in the basket.
-          </div>
+          <div>You have {this.props.cartItems.length} items in the basket.</div>
         )}
-        {this.props.basketList.length > 0 && (
+        {this.props.cartItems.length > 0 && (
           <div>
             <ul>
-              {this.props.basketList.map(item => (
+              {this.props.cartItems.map(item => (
                 <li key={item.description}>
                   <b>{item.title} </b>
-                  Volumes {item.quantity} = {item.price} x {item.quantity}
+                  Volumes {item.count} = {item.price} x {item.count}
                   <button
                     className="btn btn-danger"
-                    onClick={() => this.props.onHandleRemoveCart(item.id)}
+                    onClick={e => this.props.onHandleRemoveCart(e, item)}
                   >
                     X
                   </button>
@@ -28,8 +26,8 @@ class Basket extends React.Component {
               ))}
             </ul>
             total :
-            {this.props.basketList
-              .reduce((a, c) => a + c.price * c.quantity, 0)
+            {this.props.cartItems
+              .reduce((a, c) => a + c.price * c.count, 0)
               .toFixed(2)}
             $
             <br />
